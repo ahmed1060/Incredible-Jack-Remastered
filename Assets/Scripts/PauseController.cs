@@ -8,7 +8,9 @@ public class pauseController : MonoBehaviour
     public UnityEvent GamePaused;
     public UnityEvent GameResumed;
 
-    private bool isPaused;
+    public static bool GameIsPaused = false;
+
+    public GameObject pauseMenuUI;
 
     // Start is called before the first frame update
     void Start()
@@ -21,18 +23,41 @@ public class pauseController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            isPaused = !isPaused;
+            GameIsPaused = !GameIsPaused;
 
-            if (isPaused)
+            if (GameIsPaused)
             {
-                Time.timeScale = 0;
-                GamePaused.Invoke();
+                Pause();
             }
             else
             {
-                Time.timeScale = 1;
-                GameResumed.Invoke();
+                Resume();
             }
         }
+    }
+
+    void Pause()
+    {
+        pauseMenuUI.SetActive(true);
+        Time.timeScale = 0;
+        GamePaused.Invoke();
+    }
+
+    public void Resume()
+    {
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1;
+        GameResumed.Invoke();
+    }
+
+    public void LoadMenu()
+    {
+        Debug.Log("Loading menu......");
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Quiting game......");
+        Application.Quit();
     }
 }
