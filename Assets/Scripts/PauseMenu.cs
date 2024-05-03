@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class pauseController : MonoBehaviour
 {
@@ -50,14 +51,20 @@ public class pauseController : MonoBehaviour
         GameResumed.Invoke();
     }
 
-    public void LoadMenu()
+    public void RetryGame()
     {
-        Debug.Log("Loading menu......");
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void QuitGame()
+    public void OpenOptions()
     {
-        Debug.Log("Quiting game......");
-        Application.Quit();
+        Debug.Log("Opening Options Menu......");
+    }
+
+    public void LoadMainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 }
