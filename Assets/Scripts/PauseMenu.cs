@@ -57,11 +57,6 @@ public class pauseController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void OpenOptions()
-    {
-        Debug.Log("Opening Options Menu......");
-    }
-
     public void LoadMainMenu()
     {
         Time.timeScale = 1;
