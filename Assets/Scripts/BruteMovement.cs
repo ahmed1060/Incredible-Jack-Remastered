@@ -27,7 +27,7 @@ public class BruteMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"Grounded: {isGrounded}, Moving: {animator.GetBool("isMoving")}, Jumping: {animator.GetBool("isJumping")}, Falling: {animator.GetBool("isFalling")}");
+        //Debug.Log($"Grounded: {isGrounded}, Moving: {animator.GetBool("isMoving")}, Jumping: {animator.GetBool("isJumping")}, Falling: {animator.GetBool("isFalling")}");
         
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -44,7 +44,7 @@ public class BruteMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        Vector3 move = transform.forward * x + transform.right * -z;
         controller.Move(move * speed * Time.deltaTime);
 
         if (move != Vector3.zero)
