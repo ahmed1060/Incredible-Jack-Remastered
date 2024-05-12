@@ -21,15 +21,18 @@ public class Patrolling : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position != points[current].position)
+        if(animator.GetBool("inSight") == false)
         {
-            MoveTowards(points[current].position);
+            if (transform.position != points[current].position)
+            {
+                MoveTowards(points[current].position);
+            }
+            else
+            {
+                current = (current + 1) % points.Length;
+            }
         }
-        else
-        {
-            current = (current + 1 )% points.Length;
-        }
-
+        
         if(animator.GetBool("isDead") == true)
         {
             this.enabled = false;

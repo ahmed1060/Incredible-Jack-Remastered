@@ -25,6 +25,11 @@ public class PlayerCombat : MonoBehaviour
                 nextAttackTime = Time.time + 1f / attackRate;
             }
         }
+
+        if (animator.GetBool("isDead"))
+        {
+            this.enabled = false;
+        }
     }
 
     void Attack()
@@ -32,7 +37,6 @@ public class PlayerCombat : MonoBehaviour
         animator.SetTrigger("Attack");
 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
-
         foreach (Collider enemy in hitEnemies)
         {
             enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
@@ -46,4 +50,5 @@ public class PlayerCombat : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+
 }

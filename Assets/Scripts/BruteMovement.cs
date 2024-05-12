@@ -5,12 +5,17 @@ using UnityEngine;
 public class BruteMovement : MonoBehaviour
 {
     public CharacterController controller;
+
+    public Transform player;
+    public Transform brute;
+
     private Animator animator;
 
     public float speed = 25f;
+    public float rotationSpeed = 10;
     public float gravity = -78.48f;
     public float jumpHeight = 6f;
-
+    
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
@@ -44,11 +49,14 @@ public class BruteMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.forward * x + transform.right * -z;
+        Vector3 move = (player.transform.forward * x) + (player.transform.right * -z * 0);
         controller.Move(move * speed * Time.deltaTime);
 
         if (move != Vector3.zero)
         {
+            Quaternion lookRotation = Quaternion.LookRotation(move);
+            brute.transform.rotation = Quaternion.Slerp(brute.transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+            
             animator.SetBool("isMoving", true);
         }
         else
@@ -77,5 +85,9 @@ public class BruteMovement : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
+        if(animator.GetBool("isDead"))
+        {
+            this.enabled = false;
+        }
     }
 }

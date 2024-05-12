@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class HeartSystem : MonoBehaviour
 {
+    public Animator animator;
+
     public GameObject[] Hearts;
 
-    private int Life;
-    private bool Dead;
+    public int Life;
+    public bool Dead;
 
     private void Start()
     {
@@ -16,9 +18,10 @@ public class HeartSystem : MonoBehaviour
 
     void Update()
     {
+
         if (Dead == true)
         {
-            Debug.Log("Game Over");
+            animator.SetBool("isDead", true);
         }
     }
 
@@ -33,15 +36,22 @@ public class HeartSystem : MonoBehaviour
 
     public void TakeDamage(int d)
     {
-        for (int i = 0; i < d; i++)
+        if (Life >= 1)
         {
-            Life--;
-            Hearts[Life].SetActive(false);
+            animator.SetTrigger("gettingHit");
 
-            if (Life < 1)
+            for (int i = 0; i < d; i++)
             {
-                Dead = true;
+                Life--;
+                Hearts[Life].SetActive(false);
+
+                if (Life < 1)
+                {
+                    Dead = true;
+                    break;
+                }
             }
         }
+        
     }
 }
